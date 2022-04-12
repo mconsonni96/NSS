@@ -1,0 +1,1130 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass IEEEtran
+\begin_preamble
+% for subfigures/subtables
+\usepackage[caption=false,font=footnotesize]{subfig}
+%\pagenumbering{gobble}
+\renewcommand\toprule{\hline\hline}
+\renewcommand\bottomrule{\hline\hline}
+\end_preamble
+\options journal
+\use_default_options false
+\maintain_unincluded_children false
+\language english
+\language_package none
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command bibtex
+\index_command default
+\float_placement tbh
+\paperfontsize default
+\spacing single
+\use_hyperref true
+\pdf_title "Fully FPGA-based Innovative Detection Setup for High-Resolution Time Resolved Experiments"
+\pdf_author "F. Garzetti"
+\pdf_bookmarks false
+\pdf_bookmarksnumbered true
+\pdf_bookmarksopen true
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder true
+\pdf_colorlinks false
+\pdf_backref false
+\pdf_pdfusetitle false
+\pdf_quoted_options "pdfpagelayout=OneColumn, pdfnewwindow=true, pdfstartview=XYZ, plainpages=false"
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 2
+\papersides 1
+\paperpagestyle headings
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Fully FPGA-based Innovative Detection Setup for High-Resolution Time Resolved
+ Experiments
+\end_layout
+
+\begin_layout Author
+F.
+ Garzetti, N.
+ Corna, N.
+ Lusardi, A.
+ Costa, E.
+ Ronconi, S.
+ Salgaro, A.
+ Geraci, G.
+ Brajnik, S.
+ Carrato, G.
+ Cautero, M.
+ Cautero, R.
+ Sergo, L.
+ Stebel 
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Manuscript received May 5, 2021.
+ Authors are with the Politecnico di Milano, Department of Electronics,
+ Information and Bioengineering – DEIB, via Golgi 40, 20133 Milano MI, Italy,
+ and Elettra Sincrotrone Trieste, S.S.
+ 14 - km 163,5 in AREA Science Park, Basovizza, Trieste, 34149, Italy, and
+ DIA, University of Trieste, Via A.
+ Valerio 6/1, 34127 Trieste, Italy (fabio.garzetti@polimi.it).
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+pagestyle{headings}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Abstract
+The usage of time-based approaches in modern physics experiments, have seen
+ continuous growth thanks to the increasing performance of modern time–interval–
+meters (TIMs).
+ In this context, Time–to–Digital Converters (TDCs), that are fully–digital
+ TIMs, play a fundamental role.
+ The digital approach makes the integration into measurement setups easier,
+ while giving the possibility to investigate time–events with picosecond
+ resolution over extended dynamic–ranges.
+ Cross Delay-Lines (CDL) detectors are remarkably valuable, due to the fact
+ that the position can be detected by measuring the time of arrival, obtaining
+ both information at once.
+ With the purpose of achieving both fast parallel computing and time precision,
+ the conventional acquisition systems usually count on 4-channel Application
+ Specific Integrated Circuit (ASIC) Time-to-Digital Converters (TDCs) preceding
+ a Field Programmable Logic Array (FPGA), reaching state-of-the-art performance
+ in time resolved experiments.
+ In this kind of architecture, the lack of reconfigurability, given by the
+ ASIC, is a tightly limiting factor when customization of the setup is demanded,
+ even more so at present day, where state-of-the-art TDCs with similar performan
+ce to ASICs can be fully implemented in FPGAs; for this reason, we propose
+ a fully-FPGA based approach in order to obtain a complete real-time system
+ that can be completely reconfigured in function of the experimental setup.
+ With the aim of improving the accuracy of the experiments, the time correlation
+ between the CDL and the arrival time of other events occurring in conjunction
+ is essential.
+ For this reason, auxiliary TDC channels are needed.
+ In this contribution, we present a compact, powerful and fully–configurable
+ FPGA-based solution, where an 8–channel TDC with a precision of 12 ps r.m.s.
+ and the related real–time image reconstruction algorithm take place on
+ two different FPGA devices.
+ In this sense, a spatial resolution on the CDL of 50/60 μm FWHM is achieved.
+\end_layout
+
+\begin_layout Keywords
+Time-to-Digital Converter (TDC), Time-of-Fight (TOF), Cross Delay-Lines
+ (CDL) Detector, Field Programmable Gate Array (FPGA), Free-Electron Laser
+ (FEL), Synchrotron, 3D Imaging.
+\end_layout
+
+\begin_layout Section
+Summary
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Paragraph Start
+status open
+
+\begin_layout Plain Layout
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+I
+\end_layout
+
+\end_inset
+
+n
+\end_layout
+
+\end_inset
+
+ recent years, one of the sectors in which scientific research has been
+ focusing is the study of the temporal evolution of chemical-physical phenomena.
+ The strong interest in the so-called "time-resolved measurements" has led
+ to the creation of light sources such as free electron lasers, third generation
+ synchrotrons and lasers based on high harmonic generation: these machines
+ are characterized by the generation of electromagnetic pulses with a duration
+ well below picosecond, feature which scientists exploit to investigate
+ the dynamics of the phenomena that occur on these time scales.
+ In this field of research, "correlated measurements" find an important
+ space: in these experiments the researchers not only want to know the time
+ in which a certain phenomenon occurs, or its duration, but they also want
+ to correlate a main event, sometimes even down into the picosecond or femtoseco
+nd scale, with other events that are somehow related, according to the physics
+ of the experiment.
+ In this context, an acquisition system can no longer be based on detectors
+ seen just as "imagers": what is needed is an instrument with the ability
+ to manage multiple analogue and digital inputs and that, at the same time,
+ would control a detector used to measure the arrival time of each event
+ and to correlate it with what was detected on the other inputs.
+ The main features demanded to these detectors are, thus, high spatial and
+ time resolution, high count rate capability and single particle sensitivity,
+ which can all be delivered by Cross Delay-Lines (CDL) detectors 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "CDL,Time-res-exp"
+literal "true"
+
+\end_inset
+
+.
+ These detectors, as a matter of fact, are becoming more and more targeted
+ as an alternative solution to pixel detectors, thanks to their proficiency
+ in reconstructing bi-dimensional spatial information through the exploitation
+ of the time difference between electromagnetic pulses emerging at the delay-lin
+e extremities.
+ By accurately estimating these arrival times, the attainable target is
+ a 3D time-resolved information (X, Y, t), where the time of arrival of
+ the incoming particles corresponds to "t" and the space position on the
+ detector is, instead, represented by "X, Y".
+ A typical architecture for reading out the CDLs consists of a TAC (Time
+ to Analog Converter) or, more recently, of an Application Specific Integrated
+ Circuit (ASIC) based TDC, devoted to the timestamp generation, in conjunction
+ with a Field Programmable Gate Array (FPGA) performing the image reconstruction.
+ If on one side the high-performance time measurements and the reconfigurability
+ offered, respectively, by the ASIC TDC and by the FPGA-based image-reconstructi
+on algorithm are always satisfying, on the contrary many limiting factors
+ emerge together with the need of adapting the ASIC to different experiments,
+ most notably when considering that modern FPGA-based TDCs are able to produce
+ results that are largely comparable with the ones offered by ASIC TDCs.
+ What we did was, essentially, moving the TDC into the FPGA device, with
+ a huge improvement in terms of both overall performance and versatility
+ of CDL detector systems 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "NSS-2017,NSS-2018"
+literal "true"
+
+\end_inset
+
+.
+ The most interesting benefits that the complete system gained from the
+ migration to an innovative, fully-FPGA based, architecture is the opportunity
+ to keep improving, progressively, the overall architecture of both the
+ algorithm that takes care of the 3D image reconstruction, but also the
+ actual TDC.
+ Indeed, the latter is the one who received, in the last few years, the
+ greatest enhancements, surpassing in performance, expressed in terms of
+ resolution, precision, full scale range and dead-time, the TACs or TDCs
+ based on the classical ASIC approach 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Time-res-exp"
+literal "false"
+
+\end_inset
+
+, and becoming suitable for use in those applications that take advantage
+ of the aforementioned new generation of photon sources 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "NSS-2019"
+literal "true"
+
+\end_inset
+
+.
+\begin_inset Float table
+placement t
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Comparison between FPGA-based TDC performances from 2017 to 2021.
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:TDC_charact"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="8" columns="6">
+<features booktabs="true" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Feature
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2021
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2020
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset CommandInset citation
+LatexCommand cite
+key "NSS-2019"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset CommandInset citation
+LatexCommand cite
+key "NSS-2018"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset CommandInset citation
+LatexCommand cite
+key "NSS-2017"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Num.
+ of Chs (no SYNC)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+8
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+8
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Dead-Time 
+\begin_inset Formula $ns$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $7$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $20$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $50$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $70$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+FSR 
+\begin_inset Formula $μs$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+days
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $200$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $200$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+LSB 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $ps$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0.036$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $5$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Precision 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $ps$
+\end_inset
+
+ 
+\begin_inset Formula $r.m.s.$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $<12$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $<12$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $<12$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $<12$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $<15$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+INL over 
+\begin_inset Formula $500ns$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $4$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $4$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $4$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $40$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $80$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Connection link 
+\begin_inset Formula $Msps$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $200$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $100$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+We first presented an FPGA implementation of the CDL detection system in
+ 2017 Nuclear Science Symposium (NSS) 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "NSS-2017"
+literal "false"
+
+\end_inset
+
+, with a 4-channel Tapped Delay-Line (TDL) TDC featuring a resolution (LSB)
+ of 10 ps over a Full Scale-Range (FSR) of 10 μs, that already granted images
+ on the level of the more classical solutions 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Time-res-exp"
+literal "false"
+
+\end_inset
+
+.
+ In the following releases we confirmed the quality of our approach: from
+ 2018 edition 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "NSS-2018"
+literal "true"
+
+\end_inset
+
+ on we continued improving the TDC architecture, first lowering the resolution
+ to 5 ps and the single-shot channel precision from 15 to 12 ps r.m.s.; then,
+ in 2019 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "NSS-2019"
+literal "false"
+
+\end_inset
+
+, Integral Non-Linearity took a step forward, going from 50 ps over a 50
+ ns of dynamic-range 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "NSS-2018"
+literal "true"
+
+\end_inset
+
+ down to 4 ps over 500 ns.
+ It has to be noted that every resolution, precision, INL, and FSR improvement
+ translates directly to a better image quality, that actually reached 80/110
+ μm FWHM (35/50 μm r.m.s.) with no local aberrations.
+ In the following release, “Fully FPGA-based 3D (X,Y,t) imaging system with
+ Cross Delay-Lines detectors and Eight-Channels High-Performance Time-to-Digital
+ Converter”, presented in 2020 NSS, we targeted the speed of the TDC acquisition
+ chain, the number of channels (going from 4 to 8), and we gave the possibility
+ to measure multi-hit events, granting a minimum dead-time improved up to
+ 7 ns compared to the 100 ns available with the latest TDC ASIC working
+ at maximum precision 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ACAM"
+literal "false"
+
+\end_inset
+
+.
+ With these renewed characteristics we could afford to collect all the pulses
+ coming from the CDL with no losses on 4 of the channels, taking advantage
+ of the 4 extra channels for making time correlation.
+ Additionally, we improved by a factor 10 the data transfer from the Xilinx
+ 28–nm 7–Series Artix–7 (hosting the TDC) to the Intel 28–nm Cyc lone V
+ (which accomodates the image reconstruction algorithm), moving from 10
+ Mmeasure/s to 100 Mmeasure/s by means of a Gigabit Transceiver between
+ the two devices, which replaced the former 32-bit parallel approach.
+\end_layout
+
+\begin_layout Standard
+In this latest work we have continued to speed up the system, reducing the
+ dead–time of the TDC down to 5 ns and increasing throughput up to 200 Msps.
+ This has been possible thanks to a complete hardware redesign.
+ In fact, we replaced the Intel Cyclone-V FPGA with a modern Intel 20–nm
+ Cyclone-X; moreover, the TDC–board was redesigned and made more compact.
+ Furthermore, improvements on the TDC firmware have been achieved: the LSB
+ is now reduced to 36.6 fs and a proper management of the timestamps makes
+ it possible to extend indefinitely the full–scale range by counting the
+ events of overflow.
+ In Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:TDC_charact"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ are summed up the system capabilities, highlighting the continuous improvements
+ achieved year by year, which give us big optimism about future further
+ enhancements.
+ Fig.
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Block diagram"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ shows the complete readout system, consisting in 8 Radio Frequency (RF)
+ preamplifiers that precede 8 optional Constant Fraction Discriminators
+ (CFD), with the purpose of obtaining digital signals starting from analog
+ pulses.
+ The CFD output is then fed to the 8-channel, FPGA-based TDC, that performs
+ the measurement of the arrival time of each one of the 8 CFD signals, with
+ respect to a common START signal.
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figure/setup_final.png
+	lyxscale 25
+	width 80col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Block diagram of the proposed experimental setup.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Block diagram"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+btprint "btPrintCited"
+bibfiles "bibtex"
+options "IEEEtran_etal1"
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
