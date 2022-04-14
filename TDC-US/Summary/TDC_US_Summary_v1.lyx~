@@ -99,11 +99,29 @@
 \begin_body
 
 \begin_layout Title
-High-Performance Time-to-Digital Converter IP-Core for Xilinx UltraScale+
- FPGAs
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+da rivedere
+\end_layout
+
+\end_inset
+
+High-Performance Time-to-Digital Converter IP-Core for Xilinx Ultrascale/Ultrasc
+ale+ FPGAs
 \end_layout
 
 \begin_layout Author
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+da rifare
+\end_layout
+
+\end_inset
+
 N.
  Lusardi, F.
  Garzetti, N.
@@ -115,7 +133,7 @@ N.
 status open
 
 \begin_layout Plain Layout
-Manuscript received May 6, 2019.
+Manuscript received May 5, 2022.
  All authors are with the Politecnico di Milano, Department of Electronics,
  Information and Bioengineering – DEIB, via Golgi 40, 20133 Milano MI, Italy
  (nicola.lusardi@polimi.it).
@@ -144,42 +162,50 @@ pagestyle{headings}
 \end_layout
 
 \begin_layout Abstract
-In this contribution, we present the implementation of an high-performance
- and multi-channel, Tapped Delay-Line (TDL) based, plug-and-play, Time-to-Digita
-l Converter (TDC) IP-Core for Xilinx Field Programmable Gate Arrays (FPGAs).
+In this contribution, we present the implementation of a tunable, high-performan
+ce and multi-channel Time-to-Digital Converter (TDC) IP-Core for Xilinx
+ Ultrascale/Ultrascale+ Field Programmable Gate Arrays (FPGAs).
  The concept of tunability refers to the user-friendly graphical user interface
  (GUI) of the IP-Core, which allows to easily set the resolution (LSB) and
  the Full-Scale Range (FSR) of the device.
  In particular, we can tune the LSB up to hundreds of femtoseconds and the
  FSR up to some days.
  Moreover, the TDC presents a maximum measurement rate up to hundreds of
- Msps per channel, satisfying the requirement of high count rate capability
- demanded to this type of detector.
- To obtain such high-resolution over a wide dynamic-range the measurement
- is performed according to the Nutt-Interpolation technique.
- The timestamp of each channel is composed of a coarse part, that defines
- the FSR obtained from sampling a counter with tunable bit-dimension, and
- of a fine part, obtained from the Super Wave Union (SuperWU) sub-interpolation
- algorithm over the TDLs.
- The number of taps of the TDLs and the number of TDLs in parallel in each
- channel are tunable, making the SuperWU algorithm generate a Virtual-TDL
- (V-TDL) composed by “so called” virtual-taps, whose virtual propagation
- delays define the LSB.
- From the design point of view, the TDLs are implemented with the carry-chains,
- available into the fabric of the Xilinx device.
- A decoder used to perform the thermometric-to-binary conversion and a “bin-by-b
-in” dynamic calibrator per channel are used to correct the bubble-errors
- and to compensate at best the non-linearity, and the temperature drift
- introduced by the different propagation delays of the carry-chains blocks.
- The IP-Core is fully tested on different families of Xilinx 7-Series, UltraScal
-e and UltraScale+ FPGAs and SoCs.
+ Msps per channel, satisfying the high count-rate capability requirement
+ of state-of-the-art detectors.
+ To obtain such an high-resolution over a wide FSR, the measurement is performed
+ according to the Nutt-Interpolation technique, in which the timestamp of
+ each channel is made by a coarse part and by a fine part.
+ The high resolution given by the fine part is obtained from the Super Wave
+ Union (SuperWU) sub-interpolation algorithm, which implements a tunable
+ number of TDLs working in parallel, each one with an also tunable number
+ of taps.
+ This generates a Virtual-TDL (V-TDL) composed by virtual-taps, whose propagatio
+n delays are faster than the real ones of the single-TDL.
+ From the design point of view, the TDC has been implemented and fully tested
+ on a Kintex Ultrascale FPGA, hosted by the KCU105 Evaluation Board, where
+ the TDLs have been obtained by cascading CARRY8 primitives available into
+ the fabric of the Xilinx device.
+ Together with the other fundamental modules of the TDC, such as the dynamic
+ Calibrator, that serves to compensate at best the non-linearity due to
+ temperature and process variations, we managed to obtain up to a few dozen
+ of channels.
+ 
 \end_layout
 
 \begin_layout Keywords
-Time-of-Flight Positron Emission Tomography (PET-TOF), Time-to-Digital Converter
- (TDC), Tapped Delay-Line (TDL), Virtual Tapped Delay-Line (V-TDL), Field
- Programmable Gate Array (FPGA), thermometric-to-binary converter, decoder,
- Calibration Table (CT).
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+da rivedere
+\end_layout
+
+\end_inset
+
+Time-to-Digital Converter (TDC), Intellectual Property Core (IP-Core), Tapped
+ Delay-Line (TDL), Virtual Tapped Delay-Line (V-TDL), Field Programmable
+ Gate Array (FPGA), decoder, Calibration Table (CT).
 \end_layout
 
 \begin_layout Section
@@ -209,47 +235,111 @@ n
  been a lot of interest and progress is the study of temporal evolution
  of chemical-physical phenomena, occurring in the picosecond time scale.
  Some examples of these phenomena are Time-of-Flight Positron Emission Tomograph
-y (PET-TOF), time-resolved spectroscopy and Laser Rangefinding.
- In these experiments, researchers not only want to know the time in which
- a certain phenomenon occurs, but they also want to correlate a main event,
- sometimes even down into the picosecond or femtosecond scale, with other
- related events.
- This has led to the integration of an instrument in the acquisition system,
- which is able to discriminate the arrival time of multiple events on different
- channels.
- The main features demanded to this type of detector are, thus, high spatial
- and time resolution, high precision in the measurement, and high count
- rate capability.
- All of this can be managed by the Time-to-Digital Converter (TDC).
+y (PET-TOF) 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "7581850"
+literal "false"
+
+\end_inset
+
+, time-resolved spectroscopy 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "6674612"
+literal "false"
+
+\end_inset
+
+ and, Laser Rangefinding 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "4907333"
+literal "false"
+
+\end_inset
+
+.
+ This has led to the need of an instrument able to discriminate the arrival
+ time of multiple events on different channels, with features such as high
+ resolution, high precision in the measurement, and high count rate capability.
+ All of this can be managed by the Time-to-Digital Converter (TDC), which
+ is a fully-digital device, and represents a more flexible solution with
+ respect to its mixed-signal counterpart (Time-to-Amplitude Converter).
  
 \end_layout
 
 \begin_layout Standard
 This device can be implemented both in ASIC or in FPGA.
- We chose this second option because the FPGA, with respect to the ASIC,
- has the great advantage of high reconfigurability and low non-recurring
- costs (NRE), together with the portability and tunability given by a user-frien
-dly IP-Core packaging.
+ This second option has been choosen with respect to the ASIC for the high
+ reconfigurability, the low non-recurring costs (NRE), and low time-to-market
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "9452098"
+literal "false"
+
+\end_inset
+
+.
+ In order to make the device portable in a plug-and-play mode on different
+ systems, we choose to implement it as a user-friendly Intellectual Property
+ Core (IP-Core).
 \end_layout
 
 \begin_layout Standard
-In this contribution, we have modified the dynamic TDC IP-Core, in order
- to adapt it to Xilinx UltraScale and UltraScale+ FPGAs.
+In this contribution, we present a TDC IP-Core compatible with Xilinx Ultrascale
+ and Ultrascale+ FPGAs.
  The result is a totally tunable TDL-based, plug-and-play, TDC IP-Core,
- with an increase in performances and better accuracy, precision and reduced
- dead-time with respect to previous releases.
- We experimented that the best architecture in terms of hardware usage and
- measure precision is the one using the Tapped-Delay Line, made with carry
- chains.
- Being this an implementation on Ultrascale/Ultrascale+ FPGA, we exploited
- the CARRY8 primitive, in substitution of the CARRY4 of the previous 7-Series
- version.
+ with an high resolution in the order of hundreds of femtoseconds, a Full
+ Scale Range (FSR) up to some days, and a single-shot precision of some
+ picoseconds (Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Tab1-1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+ All these results have been achieved thanks to the Tapped-Delay Line architectu
+re made with carry chains, which are the more abundant and fast resources
+ on the FPGA for this kind of implementation 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "9452098"
+literal "false"
+
+\end_inset
+
+.
+ Being this compatible with Ultrascale/Ultrascale+ FPGA, we exploited the
+ CARRY8 primitive 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "XILINX_ULTRASCALE"
+literal "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
-The calculation of the timestamp on a single channel is made using Nutt
- Interpolation, which composes the data by a Coarse part and a Fine part.
- This allows to have high resolution and high FSR at the same time (Fig.
+The calculation of the timestamp on a single channel is made using Nutt-Interpol
+ation 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Nutt1968DigitalTI"
+literal "false"
+
+\end_inset
+
+, which composes the data by a Coarse part (i.e, Coarse Counter) and, a Fine
+ part (i.e, TDL).
+ This allows to have high-resolution and high FSR at the same time (Fig.
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:Nutt-Interpolation."
@@ -302,12 +392,8 @@ name "fig:Nutt-Interpolation."
 \end_layout
 
 \begin_layout Standard
-The coarse part is simply the sampling value of a BIT_COARSE-bit wide counter
- clocked at 
-\begin_inset Formula $T_{CLK}$
-\end_inset
-
-.
+The coarse part is simply the value of a BIT_COARSE-bit wide counter clocked
+ at 500 MHz.
  This contribution determines the FSR of the timestamp (Equation 
 \begin_inset CommandInset ref
 LatexCommand eqref
@@ -339,54 +425,62 @@ The fine contribution splits the period
 \end_inset
 
  into 
-\begin_inset Formula $2^{BIT\_RES}$
-\end_inset
-
- steps by means of 
-\begin_inset Formula $N_{TDL}$
-\end_inset
-
- TDLs that works in parallel.
- This technique allows to sub-interpolate the TDLs using the Super Wave
- Union algorithm, creating a Virtual TDL (V-TDL) composed of 
 \begin_inset Formula $N_{V}$
 \end_inset
 
- so-called virtual taps, as reported in Equation 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:virtual_bins"
-plural "false"
-caps "false"
-noprefix "false"
+ steps, by means of 
+\begin_inset Formula $N_{TDL}$
+\end_inset
+
+ 
+\begin_inset Formula $N_{TAP}$
+\end_inset
+
+-long TDLs that work in parallel.
+ This technique allows to sub-interpolate the TDLs using the Super Wave
+ Union algorithm 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Sub"
+literal "false"
 
 \end_inset
 
-,
+, creating a Virtual TDL (V-TDL) composed of 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $N_{V}=N_{TDL}\cdot N_{TAP}$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ virtual taps.
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula 
-\begin{equation}
-N_{V}=N_{TDL}\cdot N_{TAP}\label{eq:virtual_bins}
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\begin{equation}
-BIT\_RES=\log_{2}(N_{V})\label{eq:BIT_RES-1}
-\end{equation}
-
-\end_inset
-
-splitting the ultra-bin of a single TDL so to have more precision in the
- measure.
- The fine part determines the LSB of the timestamp (Equation 
+The fine part determines the LSB of the timestamp (Equation 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:LSB-1"
@@ -403,7 +497,7 @@ noprefix "false"
 \align center
 \begin_inset Formula 
 \begin{equation}
-LSB=\frac{T_{CLK}}{2^{BIT\_RES}}\label{eq:LSB-1}
+LSB=\frac{T_{CLK}}{N_{V}}\label{eq:LSB-1}
 \end{equation}
 
 \end_inset
@@ -412,78 +506,7 @@ LSB=\frac{T_{CLK}}{2^{BIT\_RES}}\label{eq:LSB-1}
 \end_layout
 
 \begin_layout Standard
-Concerning the design, each one of the TDLs is implemented using the carry-chain
-s available inside the Configurable Logic Blocks (CLBs) of the FPGAs.
- When a fine measure is performed, each TDLs generate as output a thermometric
- code, which is then converted in a binary value by a decoder.
- After the decoder, the Coarse Extension Core (CEC) appends the coarse part
- to the fine one.
- This module also contains a FIFO that has buffering and Cross-Domain Clock
- (CDC) functions, allowing each channel to sustain a maximum measure rate
- of 200 Msps.
- The last function performed by the CEC is to keep track of the overflows
- of the coarse counter, which are then counted by one of the following module,
- the Overflow Counter (OC).
- Counting the overflows allows to extend the FSR up to some days.
- In order to guarantee a low integral non-linearity error due to temperature
- and process variations, in each channel a “bin-by-bin” calibrator is present.
- Thanks to this module, a Calibration Table (CT) is built, as reported in
- Fig.
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Calibration-Table."
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- , where each bin of the TDL is mapped to a value in picoseconds, which
- represents the propagation time of the input signal across that specific
- bin.
- 
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename figure/CT.png
-	width 50col%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Calibration Table for each one of the three channels.
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:Calibration-Table."
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-To obtain high precision in the timestamp measure, we want this CT to be
- the more flat possible, meaning that no ultra-bin is present.
- Otherwise, we can adopt the Super Wave Union algorithm described before
- so to reduce the ultra-bin and flatten the CT.
- A block diagram representation of the generic channel that composes the
+A block diagram representation of the generic channel that composes the
  TDC IP-Core in represented in Fig.
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -506,7 +529,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename figure/architecture_tdc.png
+	filename figure/Architecture TDC.png
 	lyxscale 20
 	width 100col%
 
@@ -540,7 +563,187 @@ name "fig:Block_representation"
 \end_layout
 
 \begin_layout Standard
-All the performances of this TDC implementation are reported in Table 
+When a fine measure is performed, each TDLs generate as output a thermometric
+ code, which is then converted in a binary value by a decoder 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "9452098"
+literal "false"
+
+\end_inset
+
+.
+ After the decoder, the Coarse Extension Core (CEC) appends the coarse part
+ to the fine one, thus implementing the Nutt-Interpolation as said before.
+ This module also contains a FIFO that has buffering and Cross-Domain Clock
+ (CDC) functions, allowing each channel to sustain a maximum measure rate
+ of 200 Msps.
+ The last function performed by the CEC is to keep track of the overflows
+ of the coarse counter, which are then counted by one of the following module,
+ the Overflow Counter (OC).
+ Counting the overflows allows to extend the FSR up to some days.
+ In order to guarantee a low integral non-linearity error due to temperature
+ and process variations, in each channel a “bin-by-bin” calibrator is present.
+ Thanks to this module, a Calibration Table (CT) is built, as reported in
+ Fig.
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Calibration-Table."
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ , where each bin of the TDL (figure at the top), or V-TDL (figure at the
+ bottom) is mapped to a value in picoseconds, which represents the propagation
+ delay of the input signal across that specific bin.
+\end_layout
+
+\begin_layout Standard
+We can see that the V-TDL solution is better, having faster 
+\begin_inset Quotes eld
+\end_inset
+
+virtual
+\begin_inset Quotes erd
+\end_inset
+
+ bins thanks to the Super Wave Union algorithm described before.
+ Indeed, it is important to have not particularly slow bins to obtain high
+ precision in the timestamp measure.
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figure/subint no/CT no subint (final).png
+	width 100col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figure/subint yes/CT_final.png
+	width 100col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Calibration Table for the implementation at lower resolution (at the top)
+ and higher resolution (at the bottom).
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Calibration-Table."
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+The figure of merit of precision is the standard deviation of the histogram,
+ obtained by implementing the difference between the second channel and
+ the first one, thus representing the time difference between two events.
+ (Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Histogram-of-the"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figure/subint yes/Hist (US).png
+	width 70col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+numeri piu grandi.
+ Metterne uno subinterpolato e uno non.
+ e dire che quello non ha std dev peggiore.
+ e tagliare bin così da avere figura piu centrata.
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Histogram of the time measure between two channels.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Histogram-of-the"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We have tested all the performances on the KCU105 Evaluation Board, hosting
+ a Kintex Ultrascale FPGA, comparing the two different implementations:
+ one at lower resolution but with more saving in hardware (without sub-interpola
+tion) and one with higher resolution but with more hardware usage (sub-interpola
+tion with 4 TDLs working in parallel).
+ These performances are reported in Table 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "tab:Tab1-1"
@@ -550,7 +753,7 @@ noprefix "false"
 
 \end_inset
 
-.
+, highlighting the trade-off.
 \end_layout
 
 \begin_layout Standard
@@ -582,7 +785,7 @@ name "tab:Tab1-1"
 \begin_layout Plain Layout
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="6" columns="3">
+<lyxtabular version="3" rows="8" columns="3">
 <features booktabs="true" tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -601,7 +804,7 @@ Feature
 \begin_inset Text
 
 \begin_layout Plain Layout
-7-Series
+without Sub-Interpolation
 \end_layout
 
 \end_inset
@@ -610,7 +813,7 @@ Feature
 \begin_inset Text
 
 \begin_layout Plain Layout
-Ultrascale/Ultrascale+
+with Sub-Interpolation
 \end_layout
 
 \end_inset
@@ -621,8 +824,7 @@ Ultrascale/Ultrascale+
 \begin_inset Text
 
 \begin_layout Plain Layout
-Num.
- of Chs
+Clock TDC Freq.
 \end_layout
 
 \end_inset
@@ -631,7 +833,7 @@ Num.
 \begin_inset Text
 
 \begin_layout Plain Layout
-From 1 to 16
+500 MHz
 \end_layout
 
 \end_inset
@@ -651,7 +853,8 @@ From 1 to 16
 \begin_inset Text
 
 \begin_layout Plain Layout
-Clock TDC Freq.
+Num.
+ of Chs
 \end_layout
 
 \end_inset
@@ -660,7 +863,7 @@ Clock TDC Freq.
 \begin_inset Text
 
 \begin_layout Plain Layout
-400 MHz
+up to 64
 \end_layout
 
 \end_inset
@@ -669,7 +872,7 @@ Clock TDC Freq.
 \begin_inset Text
 
 \begin_layout Plain Layout
-500 MHz
+up to 32
 \end_layout
 
 \end_inset
@@ -706,7 +909,7 @@ Max.
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" leftline="true" usebox="none">
+<cell multicolumn="1" alignment="center" valignment="top" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -719,7 +922,7 @@ Resolution (LSB)
 \begin_inset Text
 
 \begin_layout Plain Layout
-From 0.3 to 150 ps
+3.9 ps
 \end_layout
 
 \end_inset
@@ -728,36 +931,94 @@ From 0.3 to 150 ps
 \begin_inset Text
 
 \begin_layout Plain Layout
-From 0.24 to 125 ps
+0.98 ps
 \end_layout
 
 \end_inset
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-Full-Scale Range (FSR)
+Full Scale Range (FSR)
 \end_layout
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+<cell multicolumn="1" alignment="center" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-From 40 ns to 10 s
+some days
 \end_layout
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" bottomline="true" leftline="true" rightline="true" usebox="none">
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-From 32 ns to 8 s
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Single-Shot Precision
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+9.2 ps rms
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4.2 ps rms
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+LUT / FF / BRAM
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2209 / 3050 / 1.5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5484 / 7736 / 3.5
 \end_layout
 
 \end_inset
