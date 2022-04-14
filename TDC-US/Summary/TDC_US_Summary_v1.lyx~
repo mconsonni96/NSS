@@ -688,8 +688,15 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename figure/subint yes/Hist (US).png
-	width 70col%
+	filename figure/subint no/Hist (no subint).png
+	width 50col%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename figure/subint yes/Hist (subint).png
+	width 50col%
 
 \end_inset
 
@@ -740,9 +747,9 @@ name "fig:Histogram-of-the"
 \begin_layout Standard
 We have tested all the performances on the KCU105 Evaluation Board, hosting
  a Kintex Ultrascale FPGA, comparing the two different implementations:
- one at lower resolution but with more saving in hardware (without sub-interpola
-tion) and one with higher resolution but with more hardware usage (sub-interpola
-tion with 4 TDLs working in parallel).
+ one at lower resolution but with more hardware saving (without sub-interpolatio
+n) and one with higher resolution but with more hardware usage (sub-interpolatio
+n with 4 TDLs working in parallel).
  These performances are reported in Table 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -980,7 +987,7 @@ Single-Shot Precision
 \begin_inset Text
 
 \begin_layout Plain Layout
-9.2 ps rms
+6.3 ps rms
 \end_layout
 
 \end_inset

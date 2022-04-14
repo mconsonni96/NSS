@@ -99,29 +99,11 @@
 \begin_body
 
 \begin_layout Title
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-da rivedere
-\end_layout
-
-\end_inset
-
 High-Performance Time-to-Digital Converter IP-Core for Xilinx Ultrascale/Ultrasc
 ale+ FPGAs
 \end_layout
 
 \begin_layout Author
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-da rifare
-\end_layout
-
-\end_inset
-
 N.
  Lusardi, F.
  Garzetti, N.
@@ -164,7 +146,7 @@ pagestyle{headings}
 \begin_layout Abstract
 In this contribution, we present the implementation of a tunable, high-performan
 ce and multi-channel Time-to-Digital Converter (TDC) IP-Core for Xilinx
- Ultrascale/Ultrascale+ Field Programmable Gate Arrays (FPGAs).
+ 7-Series Field Programmable Gate Arrays (FPGAs).
  The concept of tunability refers to the user-friendly graphical user interface
  (GUI) of the IP-Core, which allows to easily set the resolution (LSB) and
  the Full-Scale Range (FSR) of the device.
@@ -194,18 +176,9 @@ n delays are faster than the real ones of the single-TDL.
 \end_layout
 
 \begin_layout Keywords
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-da rivedere
-\end_layout
-
-\end_inset
-
-Time-to-Digital Converter (TDC), Intellectual Property Core (IP-Core), Tapped
- Delay-Line (TDL), Virtual Tapped Delay-Line (V-TDL), Field Programmable
- Gate Array (FPGA), decoder, Calibration Table (CT).
+Time-to-Digital Converter (TDC), Intellectual Property Core (IP-Core), Digital
+ Signal Processor (DSP), Field Programmable Gate Array (FPGA), decoder,
+ Calibration Table (CT), ultra-wide bin (UWB).
 \end_layout
 
 \begin_layout Section
@@ -529,7 +502,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename figure/Architecture TDC.png
+	filename figure/no subint/bitmap.png
 	lyxscale 20
 	width 100col%
 
@@ -688,16 +661,8 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename figure/subint no/Hist (no subint).png
-	width 50col%
-	clip
-
-\end_inset
-
-
-\begin_inset Graphics
-	filename figure/subint yes/Hist (subint).png
-	width 50col%
+	filename figure/subint yes/Hist (US).png
+	width 70col%
 
 \end_inset
 
