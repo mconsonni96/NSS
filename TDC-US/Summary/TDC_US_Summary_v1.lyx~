@@ -186,10 +186,7 @@ n delays are faster than the real ones of the single-TDL.
  on a Kintex Ultrascale FPGA, hosted by the KCU105 Evaluation Board, where
  the TDLs have been obtained by cascading CARRY8 primitives available into
  the fabric of the Xilinx device.
- Together with the other fundamental modules of the TDC, such as the dynamic
- Calibrator, that serves to compensate at best the non-linearity due to
- temperature and process variations, we managed to obtain up to a few dozen
- of channels.
+ We managed to obtain up to a few dozen of channels.
  
 \end_layout
 
@@ -291,9 +288,9 @@ literal "false"
 In this contribution, we present a TDC IP-Core compatible with Xilinx Ultrascale
  and Ultrascale+ FPGAs.
  The result is a totally tunable TDL-based, plug-and-play, TDC IP-Core,
- with an high resolution in the order of hundreds of femtoseconds, a Full
- Scale Range (FSR) up to some days, and a single-shot precision of some
- picoseconds (Table 
+ with a resolution in the order of hundreds of femtoseconds, a Full Scale
+ Range (FSR) up to some days, and a single-shot precision of some picoseconds
+ (Table 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "tab:Tab1-1"
@@ -597,11 +594,8 @@ noprefix "false"
 
  , where each bin of the TDL (figure at the top), or V-TDL (figure at the
  bottom) is mapped to a value in picoseconds, which represents the propagation
- delay of the input signal across that specific bin.
-\end_layout
-
-\begin_layout Standard
-We can see that the V-TDL solution is better, having faster 
+ delay of the input signal through that specific bin.
+ We can see that the V-TDL solution is better, having faster 
 \begin_inset Quotes eld
 \end_inset
 
@@ -662,8 +656,8 @@ name "fig:Calibration-Table."
 \end_inset
 
 The figure of merit of precision is the standard deviation of the histogram,
- obtained by implementing the difference between the second channel and
- the first one, thus representing the time difference between two events.
+ which is representative of the time difference between the second channel
+ and the first one.
  (Fig.
  
 \begin_inset CommandInset ref
@@ -676,7 +670,8 @@ noprefix "false"
 \end_inset
 
 ).
- 
+ We can easily see from the figure that the sub-interpolated case leads
+ to a better precision.
 \end_layout
 
 \begin_layout Standard
@@ -704,23 +699,11 @@ status open
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-numeri piu grandi.
- Metterne uno subinterpolato e uno non.
- e dire che quello non ha std dev peggiore.
- e tagliare bin così da avere figura piu centrata.
-\end_layout
-
-\end_inset
-
-
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Histogram of the time measure between two channels.
+Histogram of the time difference between two channels in the case without
+ sub-interpolation (on the left) and with sub-interpolation (on the right).
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:Histogram-of-the"
@@ -732,10 +715,6 @@ name "fig:Histogram-of-the"
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Plain Layout
 
 \end_layout
 
@@ -1007,7 +986,7 @@ Single-Shot Precision
 \begin_inset Text
 
 \begin_layout Plain Layout
-LUT / FF / BRAM
+LUT / FF / BRAM (single channel)
 \end_layout
 
 \end_inset
