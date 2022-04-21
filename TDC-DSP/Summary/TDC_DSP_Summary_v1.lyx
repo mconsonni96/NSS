@@ -99,11 +99,19 @@
 \begin_body
 
 \begin_layout Title
-High-Performance DSP-based Time-to-Digital Converter IP-Core for Xilinx
- 7-Series
+High-Resolution DSP-based Time-to-Digital Converter IP-Core for Xilinx 7-Series
 \end_layout
 
 \begin_layout Author
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+da rifare
+\end_layout
+
+\end_inset
+
 N.
  Lusardi, F.
  Garzetti, N.
@@ -151,15 +159,16 @@ In this contribution, we present the implementation of a multi-channel DSP-based
 n (LSB), up to hundreds of femtoseconds, and Full-Scale Range (FSR), up
  to some days, from the user-friendly graphical user interface (GUI) of
  the IP-Core.
- Last but not least, the TDC is also characterized by a maximum measurement
+ Last but not least, the TDC is also characterized by a maximum measurement-rate
  in the order of hundreds of Msps per channel, thus satisfying the high
  count-rate capability required by state-of-the-art detectors.
  To obtain such an high-resolution over a wide FSR, the measurement is performed
  according to the Nutt-Interpolation technique, in which the timestamp of
  each channel is made by a coarse part and by a fine part.
- The high resolution given by the fine part is obtained thanks to the Digital
- Signal Processor (DSP) architecture, which implements a chain with a tunable
- number of bins, each one characterized by a certain propagation delay.
+ The very high resolution given by the fine part is obtained thanks to the
+ Digital Signal Processor (DSP) architecture, which implements an adder
+ chain with a tunable number of bins, each one characterized by a certain
+ propagation delay given by the adder's operation.
  Exploiting this type of resource leads to a relaxation in the hardware
  utilization, because the sampling of the output data is made by the flip-flops
  (FFs) integrated in the DSP slice itself, thus not requiring extra FFs
@@ -233,18 +242,31 @@ literal "false"
 .
  This led to employ an instrument able to discriminate the arrival time
  of multiple events on different channels, with high temporal resolution
- and high count rate capability.
+ and high count-rate capability.
  All of this can be managed by the Time-to-Digital Converter (TDC), a fully-digi
 tal device which represents a more flexible alternative than mixed-signal
- detectors such as Time-to-Amplitude Converter.
+ detectors such as Time-to-Amplitude Converter 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "8743999"
+literal "false"
+
+\end_inset
+
+.
  
 \end_layout
 
 \begin_layout Standard
-This device can be implemented both in ASIC or in FPGA.
- This second option has been choosen with respect to the ASIC for the high
- reconfigurability, the low non-recurring costs (NRE), and low time-to-market
- 
+This device can be implemented both in ASIC 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "123198"
+literal "false"
+
+\end_inset
+
+ or in FPGA 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "9452098"
@@ -253,6 +275,8 @@ literal "false"
 \end_inset
 
 .
+ This second option has been choosen with respect to the ASIC for the high
+ reconfigurability, the low non-recurring costs (NRE), and low time-to-market.
  In order to allow easy portability of this device on different systems,
  we choose to implement it as a user-friendly plug-and-play Intellectual
  Property Core (IP-Core).
@@ -281,15 +305,23 @@ literal "false"
 
 \end_inset
 
-, available into the fabric of the Xilinx FPGA.
- The reason of this choice with respect to the more common carry-chain based
- solution can be found in the relaxation of hardware utilization.
+, available into the Xilinx FPGA.
+ The reason for this choice with respect to the more common carry-chain
+ based solution can be found in the relaxation of hardware utilization.
  Indeed, in typical TDC architectures, no DSP slices in the FPGA are ever
  used, despite they can also be used to create delay chains, being therefore
  suited to this kind of high-resolution applications.
  Moreover, the recording of the output data can be managed by the flip-flops
  (FFs) integrated in the DSP slice itself, no thus requiring extra FPGA
- flip-flop resources.
+ flip-flop resources 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Kwiatkowski_Pawel_Employing_2019"
+literal "false"
+
+\end_inset
+
+.
  To create a delay chain in a single DSP, we exploited the operation of
  sum managed by the internal Arithmetic Logic Unit (ALU), which causes overflow
  in the 48-bit wide output result, and therefore the propagation of a zero
@@ -317,7 +349,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename figure/DSP48E1.png
+	filename figure/DSP_FINAL.png
 	width 100col%
 
 \end_inset
@@ -418,31 +450,17 @@ name "fig:Nutt-Interpolation."
 
 \begin_layout Standard
 The coarse part consists in the sampled value of a BIT_COARSE-bit wide counter
- clocked at 400 MHz.
- This is the contribution determining the FSR of the timestamp (Equation
- 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:FSR-1"
-plural "false"
-caps "false"
-noprefix "false"
-
+ clocked at 400 MHz (
+\begin_inset Formula $T_{CLK}=2.5\,ns$
 \end_inset
 
 ).
- 
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\begin{equation}
-FSR=T_{CLK}\cdot2^{BIT\_COARSE}\label{eq:FSR-1}
-\end{equation}
-
+ This is the contribution determining the FSR of the timestamp; i.e., 
+\begin_inset Formula $FSR=T_{CLK}\cdot2^{BIT\_COARSE}$
 \end_inset
 
-
+.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -565,7 +583,7 @@ When a fine measure is performed, the DSP chain generates a thermometric
  
 \begin_inset CommandInset citation
 LatexCommand cite
-key "9452098"
+key "4529581"
 literal "false"
 
 \end_inset
@@ -573,9 +591,9 @@ literal "false"
 .
  After the decoder, the Coarse Extension Core (CEC) implements the Nutt-Interpol
 ation described above, appending the coarse part to the fine one.
- This module also allows each channel to sustain a maximum measure rate
+ This module also allows each channel to sustain a maximum measure-rate
  of 200 Msps, thanks to the internal FIFO that has buffering and Cross-Domain
- Clock (CDC) functions.
+ Clock (CDC) functions (from the 400 MHz clock down to a 200 MHz one).
  The last function performed by the CEC is to keep track of the overflows
  of the coarse counter, which are then counted by one of the following module,
  the Overflow Counter (OC).
@@ -589,10 +607,18 @@ bin-by-bin
 \begin_inset Quotes erd
 \end_inset
 
- dynamic Calibrator present in each channel, with the task of building a
- Calibration Table (CT), which consists in mapping each bin of the DSP-chain
- to a value in picoseconds, thus representing the propagation delay of the
- input signal across each single bin 
+ dynamic Calibrator 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "8885152"
+literal "false"
+
+\end_inset
+
+ present in each channel, with the task of building a Calibration Table
+ (CT), which consists in mapping each bin of the DSP-chain to a value in
+ picoseconds, thus representing the propagation delay of the input signal
+ across each single bin 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:Calibration-Table."
@@ -656,7 +682,7 @@ We can see from the figure that the DSP-chain architecture suffers from
 
 \begin_layout Standard
 We have tested all the performances on the Felix board, hosting an Artix-7
- FPGA.
+ FPGA (xc7a100tftg256-2).
  These performances are reported in Table 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -894,7 +920,7 @@ Single-Shot Precision
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+25 ps
 \end_layout
 
 \end_inset

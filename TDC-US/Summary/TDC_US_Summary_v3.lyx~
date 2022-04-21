@@ -1,0 +1,1581 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass IEEEtran
+\begin_preamble
+% for subfigures/subtables
+\usepackage[caption=false,font=footnotesize]{subfig}
+%\pagenumbering{gobble}
+\renewcommand\toprule{\hline\hline}
+\renewcommand\bottomrule{\hline\hline}
+\end_preamble
+\options journal
+\use_default_options false
+\maintain_unincluded_children false
+\language english
+\language_package none
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command bibtex
+\index_command default
+\float_placement tbh
+\paperfontsize default
+\spacing single
+\use_hyperref true
+\pdf_title "Extremely-high speed Time-to-Digital converter on latest generation Field Programmable Gate Arrays for mission-critical applications"
+\pdf_author "Nicola Corna"
+\pdf_bookmarks false
+\pdf_bookmarksnumbered true
+\pdf_bookmarksopen true
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder true
+\pdf_colorlinks false
+\pdf_backref false
+\pdf_pdfusetitle false
+\pdf_quoted_options "pdfpagelayout=OneColumn, pdfnewwindow=true, pdfstartview=XYZ, plainpages=false"
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 2
+\papersides 1
+\paperpagestyle headings
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\author -1129936465 "Nicola Lusardi"
+\end_header
+
+\begin_body
+
+\begin_layout Title
+High-Performance Time-to-Digital Converter IP-Core for Xilinx Ultrascale/Ultrasc
+ale+ FPGAs
+\end_layout
+
+\begin_layout Author
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+da rifare
+\end_layout
+
+\end_inset
+
+N.
+ Lusardi, F.
+ Garzetti, N.
+ Corna, S.
+ Salgaro, N.
+ Bachetti, A.
+ Geraci
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Manuscript received May 5, 2022.
+ All authors are with the Politecnico di Milano, Department of Electronics,
+ Information and Bioengineering – DEIB, via Golgi 40, 20133 Milano MI, Italy
+ (nicola.lusardi@polimi.it).
+ detail
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+pagestyle{headings}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Abstract
+In this contribution, we present the implementation of a tunable, high-performan
+ce and multi-channel Time-to-Digital Converter (TDC) IP-Core for Xilinx
+ Ultrascale/Ultrascale+ Field Programmable Gate Arrays (FPGAs).
+ The concept of tunability refers to the user-friendly graphical user interface
+ (GUI) of the IP-Core, which allows to easily set the resolution (LSB)
+\change_inserted -1129936465 1650464795
+,
+\change_deleted -1129936465 1650464797
+ and
+\change_unchanged
+ the Full-Scale Range (FSR)
+\change_inserted -1129936465 1650464809
+, and the number of channels
+\change_unchanged
+ of the device.
+ In particular, we can tune the LSB up to hundreds of femtoseconds and the
+ FSR up to some days.
+ Moreover, the TDC presents a maximum measurement rate up to hundreds of
+ Msps per channel, satisfying the high count-rate capability requirement
+ of state-of-the-art detectors.
+ To obtain such an high-resolution over a wide FSR, the measurement is performed
+ according to the Nutt-Interpolation technique, in which the timestamp of
+ each channel is made by a coarse part and by a fine part.
+ The high
+\change_inserted -1129936465 1650464833
+-
+\change_deleted -1129936465 1650464833
+ 
+\change_unchanged
+resolution given by the fine part is obtained from the Super Wave Union
+ (SuperWU) sub-interpolation algorithm, which implements a tunable number
+ of TDLs working in parallel, each one with an also tunable number of taps.
+ This generates a Virtual-TDL (V-TDL) composed by virtual-taps, whose propagatio
+n delays are faster than the real ones of the single-TDL.
+ From the design point of view, the TDC has been implemented and fully tested
+ on a Kintex Ultrascale FPGA, hosted by the KCU105 Evaluation Board, where
+ the TDLs have been obtained by cascading CARRY8 primitives available into
+ the fabric of the Xilinx device.
+ We managed to obtain up to a few dozen of channels.
+ 
+\end_layout
+
+\begin_layout Keywords
+
+\change_deleted -1129936465 1650464928
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+da rivedere
+\end_layout
+
+\end_inset
+
+
+\change_unchanged
+Time-to-Digital Converter (TDC), 
+\change_deleted -1129936465 1650464890
+Intellectual Property Core (IP-Core), 
+\change_unchanged
+Tapped Delay-Line (TDL), Virtual Tapped Delay-Line (V-TDL), Field Programmable
+ Gate Array (FPGA), 
+\change_deleted -1129936465 1650464913
+decoder, Calibration Table (CT).
+\change_inserted -1129936465 1650464918
+Intellectual Property Core (IP-Core).
+\change_unchanged
+
+\end_layout
+
+\begin_layout Section
+Summary 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Paragraph Start
+status open
+
+\begin_layout Plain Layout
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+I
+\end_layout
+
+\end_inset
+
+n
+\end_layout
+
+\end_inset
+
+ recent years, one of the scientific research sector in which there has
+ been a lot of interest and progress is the study of temporal evolution
+ of chemical-physical phenomena, occurring in the picosecond time scale.
+ Some examples of these phenomena are Time-of-Flight Positron Emission Tomograph
+y (PET-TOF) 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "7581850"
+literal "false"
+
+\end_inset
+
+, time-resolved spectroscopy 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "6674612"
+literal "false"
+
+\end_inset
+
+ and, Laser Rangefinding 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "4907333"
+literal "false"
+
+\end_inset
+
+.
+ This has led to the need of an instrument able to discriminate the arrival
+ time of multiple events on different channels, with features such as high
+\change_inserted -1129936465 1650464956
+-
+\change_deleted -1129936465 1650464956
+ 
+\change_unchanged
+resolution, high
+\change_inserted -1129936465 1650464960
+-
+\change_deleted -1129936465 1650464960
+ 
+\change_unchanged
+precision in the measurement, and high count rate capability.
+ All of this can be managed by the Time-to-Digital Converter (TDC), which
+ is a fully-digital device, and represents a more flexible solution with
+ respect to its mixed-signal counterpart (Time-to-Amplitude Converter) 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "8743999"
+literal "false"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+This device can be implemented both in ASIC 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "123198"
+literal "false"
+
+\end_inset
+
+ or in FPGA
+\change_inserted -1129936465 1650465094
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "9452098"
+literal "false"
+
+\end_inset
+
+
+\change_unchanged
+.
+ This second option has been 
+\change_deleted -1129936465 1650465002
+choosen
+\change_inserted -1129936465 1650465094
+chosen
+\change_unchanged
+ with respect to the ASIC for the high re
+\change_inserted -1129936465 1650465094
+-
+\change_unchanged
+configurability, the low non-recurring costs (NRE), and low time-to-market
+ 
+\change_inserted -1129936465 1650465094
+that best fit with respect to the request of the world of research
+\change_deleted -1129936465 1650465090
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "9452098"
+literal "false"
+
+\end_inset
+
+
+\change_unchanged
+.
+ In order to make the device portable in a plug-and-play mode on different
+ systems, we choose to implement it as a user-friendly Intellectual Property
+ Core (IP-Core).
+\end_layout
+
+\begin_layout Standard
+In this contribution, we present a TDC IP-Core compatible with Xilinx Ultrascale
+ and Ultrascale+ FPGAs.
+ The result is a totally tunable TDL-based, plug-and-play, TDC IP-Core,
+ with a resolution in the order of hundreds of femtoseconds, a Full Scale
+ Range (FSR) up to some days, and a single-shot precision of some picoseconds
+ (Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Tab1-1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+ All these results have been achieved thanks to the Tapped-Delay Line
+\change_inserted -1129936465 1650465159
+ (TDL)
+\change_unchanged
+ architecture made with carry chains, which are the more abundant and fast
+ resources on the FPGA for this kind of implementation 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "8820027"
+literal "false"
+
+\end_inset
+
+.
+ Being this compatible with Ultrascale/Ultrascale+ FPGA, we exploited the
+ CARRY8 primitive 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "XILINX_ULTRASCALE"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The calculation of the timestamp on a single channel is made using Nutt-Interpol
+ation 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Nutt1968DigitalTI"
+literal "false"
+
+\end_inset
+
+, which composes the data by a Coarse part (i.e, Coarse Counter) and, a Fine
+ part (i.e, TDL).
+ This allows to have high-resolution and high FSR at the same time (Fig.
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Nutt-Interpolation."
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+ 
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figure/Nutt.png
+	width 100col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Nutt-Interpolation.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Nutt-Interpolation."
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The coarse part is simply the value of a BIT_COARSE-bit wide counter clocked
+ at 500 MHz
+\change_inserted -1129936465 1650465231
+ (
+\begin_inset Formula $T_{CLK}=2\,ns$
+\end_inset
+
+)
+\change_unchanged
+.
+ This contribution determines the FSR of the timestamp
+\change_deleted -1129936465 1650466392
+ (Equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:FSR-1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+)
+\change_inserted -1129936465 1650466414
+; i.e., 
+\begin_inset Formula $FSR=T_{CLK}\cdot2^{BIT\_COARSE}$
+\end_inset
+
+
+\change_unchanged
+.
+
+\change_deleted -1129936465 1650466418
+ 
+\end_layout
+
+\begin_layout Standard
+
+\change_deleted -1129936465 1650466410
+\begin_inset Formula $FSR=T_{CLK}\cdot2^{BIT\_COARSE}$
+\end_inset
+
+
+\change_unchanged
+
+\end_layout
+
+\begin_layout Standard
+The fine contribution splits the period 
+\begin_inset Formula $T_{CLK}$
+\end_inset
+
+ into 
+\begin_inset Formula $N_{V}$
+\end_inset
+
+ steps, by means of 
+\begin_inset Formula $N_{TDL}$
+\end_inset
+
+ 
+\begin_inset Formula $N_{TAP}$
+\end_inset
+
+-long TDLs that work in parallel.
+ This technique allows to sub-interpolate the TDLs using the Super Wave
+ Union algorithm 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Sub"
+literal "false"
+
+\end_inset
+
+, creating a Virtual TDL (V-TDL) composed of 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $N_{V}=N_{TDL}\cdot N_{TAP}$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ virtual taps.
+\change_deleted -1129936465 1650466425
+
+\end_layout
+
+\begin_layout Standard
+The fine part determines the LSB of the timestamp
+\change_deleted -1129936465 1650466430
+ (Equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:LSB-1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+)
+\change_inserted -1129936465 1650466445
+; i.e., 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $LSB=\frac{T_{CLK}}{N_{V}}$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+.
+\change_deleted -1129936465 1650466435
+:
+\change_unchanged
+ 
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\change_deleted -1129936465 1650466448
+\begin_inset Formula 
+\begin{equation}
+LSB=\frac{T_{CLK}}{N_{V}}\label{eq:LSB-1}
+\end{equation}
+
+\end_inset
+
+
+\change_unchanged
+
+\end_layout
+
+\begin_layout Standard
+A block diagram representation of the generic channel that composes the
+ TDC IP-Core in represented in Fig
+\change_inserted -1129936465 1650466457
+ure
+\change_deleted -1129936465 1650466458
+.
+
+\change_inserted -1129936465 1650466458
+ 
+\change_unchanged
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Block_representation"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figure/Architecture TDC.png
+	lyxscale 20
+	width 100col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Block diagram of a single channel composing the TDC IP-Core.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Block_representation"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+When a fine measure is performed, each TDLs generate as output a thermometric
+ code, which is then converted in a binary value by a decoder 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "4529581"
+literal "false"
+
+\end_inset
+
+.
+ After the decoder, the Coarse Extension Core (CEC) appends the coarse part
+ to the fine one, thus implementing the Nutt-Interpolation as said before.
+ This module also contains a FIFO that has buffering and Cross-Domain Clock
+ (CDC) functions
+\change_inserted -1129936465 1650465371
+ (from the 500 MHz clock down to a 200 MHz one)
+\change_unchanged
+, allowing each channel to sustain a maximum measure rate of 200 Msps.
+ The last function performed by the CEC is to keep track of the overflows
+ of the coarse counter, which are then counted by one of the following module,
+ the Overflow Counter (OC).
+ Counting the overflows allows to extend the FSR up to some days.
+ In order to guarantee a low integral non-linearity error due to temperature
+ and process variations, in each channel a “bin-by-bin” calibrator is present
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "8885152"
+literal "false"
+
+\end_inset
+
+.
+ Thanks to this module, a Calibration Table (CT) is built, as reported in
+ Fig
+\change_inserted -1129936465 1650465420
+ure
+\change_deleted -1129936465 1650465419
+.
+\change_unchanged
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Calibration-Table."
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ , where each bin of the TDL (figure at the top), or V-TDL (figure at the
+ bottom) is mapped to a value in picoseconds, which represents the propagation
+ delay of the input signal through that specific bin.
+ We can see that the V-TDL solution 
+\change_inserted -1129936465 1650465507
+(
+\begin_inset Formula $N_{TAP}=512$
+\end_inset
+
+, 
+\begin_inset Formula $N_{TDL}=4$
+\end_inset
+
+, 
+\begin_inset Formula $N_{V}=2048$
+\end_inset
+
+) 
+\change_unchanged
+is 
+\change_deleted -1129936465 1650465945
+better
+\change_inserted -1129936465 1650465955
+more resolved, i.e.
+ 
+\begin_inset Formula $LSB=0.98\,ps$
+\end_inset
+
+,
+\change_unchanged
+ 
+\change_inserted -1129936465 1650465997
+with respect to the not sub-interpolated one (
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $N_{V}=N_{TAP}=512$
+\end_inset
+
+,
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ so 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $N_{TDL}=1$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+), i.e.
+ 
+\begin_inset Formula $LSB=3.9\,ps$
+\end_inset
+
+
+\change_unchanged
+, having faster 
+\begin_inset Quotes eld
+\end_inset
+
+virtual
+\begin_inset Quotes erd
+\end_inset
+
+ bins thanks to the Super Wave Union algorithm described before.
+ Indeed, it is important to have not particularly slow bins to obtain high
+\change_inserted -1129936465 1650465983
+-
+\change_deleted -1129936465 1650465443
+ 
+\change_unchanged
+precision in the timestamp measure.
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figure/subint no/CT no subint (final).png
+	width 100col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figure/subint yes/CT_final.png
+	width 100col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Calibration Table for the implementation 
+\change_deleted -1129936465 1650465710
+at lower resolution
+\change_inserted -1129936465 1650466075
+without sub-interpolation 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+(
+\begin_inset Formula $N_{V}=N_{TAP}=512$
+\end_inset
+
+,
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ so 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $N_{TDL}=1$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+), i.e.
+ 
+\begin_inset Formula $LSB=3.9\,ps$
+\end_inset
+
+,
+\change_unchanged
+ (at the top) and 
+\change_deleted -1129936465 1650465731
+higher resolution
+\change_inserted -1129936465 1650466066
+with sub-interpolation
+\change_deleted -1129936465 1650466080
+ 
+\change_inserted -1129936465 1650466096
+ (
+\begin_inset Formula $N_{TAP}=512$
+\end_inset
+
+, 
+\begin_inset Formula $N_{TDL}=4$
+\end_inset
+
+, 
+\begin_inset Formula $N_{V}=2048$
+\end_inset
+
+), i.e.
+ 
+\begin_inset Formula $LSB=0.98\,ps$
+\end_inset
+
+, 
+\change_unchanged
+(at the bottom).
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Calibration-Table."
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+The figure of merit of precision is the standard deviation of the histogram,
+ which is representative of the time difference between the second channel
+ and the first one.
+ (Fig
+\change_inserted -1129936465 1650465983
+ure
+\change_deleted -1129936465 1650465671
+.
+
+\change_unchanged
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Histogram-of-the"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+ We can easily see from 
+\change_deleted -1129936465 1650465837
+the figure 
+\change_unchanged
+that the sub-interpolated
+\change_inserted -1129936465 1650465983
+ (figure on left)
+\change_unchanged
+ case leads to a better precision
+\change_inserted -1129936465 1650465983
+, i.e.
+ 4.2 ps r.m.s., with respect to the absence of the sub-interpolation, i.e.
+ 6.3 ps r.m.s., (figure on the right)
+\change_unchanged
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figure/subint no/Hist (no subint).png
+	width 50col%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename figure/subint yes/Hist (subint).png
+	width 50col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Histogram of the time difference between two channels in the case without
+ sub-interpolation
+\change_inserted -1129936465 1650466117
+ 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+(
+\begin_inset Formula $N_{V}=N_{TAP}=512$
+\end_inset
+
+,
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ so 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $N_{TDL}=1$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+), i.e.
+ 
+\begin_inset Formula $6.3\,ps\,r.m.s.$
+\end_inset
+
+
+\change_unchanged
+ (on the left) and with sub-interpolation
+\change_inserted -1129936465 1650466152
+ 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+(
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+
+\begin_inset Formula $N_{TAP}=512$
+\end_inset
+
+, 
+\begin_inset Formula $N_{TDL}=4$
+\end_inset
+
+, 
+\begin_inset Formula $N_{V}=2048$
+\end_inset
+
+), i.e.
+ 
+\begin_inset Formula $4.2\,ps\,r.m.s.$
+\end_inset
+
+
+\change_unchanged
+ (on the right).
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Histogram-of-the"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We have tested all the performances on the KCU105 Evaluation Board, hosting
+ a Kintex Ultrascale FPGA (xcku040-ffva1156-2-e), comparing the two different
+ implementations: one at lower resolution but with more hardware saving
+ (without sub-interpolation) and one with higher resolution but with more
+ hardware usage (sub-interpolation with 4 TDLs working in parallel).
+ These performances are reported in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Tab1-1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, highlighting the trade-off.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement b
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Achievable performance of the TDC IP-Core.
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Tab1-1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="9" columns="3">
+<features booktabs="true" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Feature
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+without Sub-Interpolation
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+with Sub-Interpolation
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Clock TDC Freq.
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+500 MHz
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Num.
+ of Chs
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+up to 64
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+up to 32
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Max.
+ Channel Rate
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+200 MHz
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $N_{TAP}/N_{TDL}/N_{V}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+512/1/512
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+512/4/2048
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multicolumn="1" alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Resolution (LSB)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3.9 ps
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.98 ps
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Full Scale Range (FSR)
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+some days
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Single-Shot Precision
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6.3 ps rms
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4.2 ps rms
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+LUT/FF/BRAM (one ch.)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2209/3050/1.5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5484/7736/3.5
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+possiamo stmpare le ref in maniera molto più snella per stare nella pag
+ agiremo li non preoccuaprti
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+btprint "btPrintCited"
+bibfiles "References"
+options "IEEEtran"
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
