@@ -1,0 +1,1849 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass IEEEtran
+\begin_preamble
+% for subfigures/subtables
+\usepackage[caption=false,font=footnotesize]{subfig}
+%\pagenumbering{gobble}
+\renewcommand\toprule{\hline\hline}
+\renewcommand\bottomrule{\hline\hline}
+\end_preamble
+\options journal
+\use_default_options false
+\maintain_unincluded_children false
+\language english
+\language_package none
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command bibtex
+\index_command default
+\float_placement tbh
+\paperfontsize default
+\spacing single
+\use_hyperref true
+\pdf_title "Extremely-high speed Time-to-Digital converter on latest generation Field Programmable Gate Arrays for mission-critical applications"
+\pdf_author "Nicola Corna"
+\pdf_bookmarks false
+\pdf_bookmarksnumbered true
+\pdf_bookmarksopen true
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder true
+\pdf_colorlinks false
+\pdf_backref false
+\pdf_pdfusetitle false
+\pdf_quoted_options "pdfpagelayout=OneColumn, pdfnewwindow=true, pdfstartview=XYZ, plainpages=false"
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 2
+\papersides 1
+\paperpagestyle headings
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\author -1129936465 "Nicola Lusardi"
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Compact DSP-based Time-to-Digital Converter IP-Core for Xilinx 7-Series
+\end_layout
+
+\begin_layout Author
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+da rifare
+\end_layout
+
+\end_inset
+
+N.
+ Lusardi, F.
+ Garzetti, N.
+ Corna, S.
+ Salgaro, N.
+ Bachetti, A.
+ Geraci
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Manuscript received May 5, 2022.
+ All authors are with the Politecnico di Milano, Department of Electronics,
+ Information and Bioengineering – DEIB, via Golgi 40, 20133 Milano MI, Italy
+ (nicola.lusardi@polimi.it).
+ detail
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+pagestyle{headings}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Abstract
+In this contribution, we present the implementation of a 
+\change_inserted -1129936465 1650722804
+compact, 
+\change_unchanged
+multi-channel
+\change_inserted -1129936465 1650722815
+, and high-resolution
+\change_deleted -1129936465 1650722493
+DSP-based 
+\change_unchanged
+ Time-to-Digital Converter (TDC) IP-Core 
+\change_inserted -1129936465 1650722616
+implemented using the Digital Signal Processor (DSP) blocks 
+\change_deleted -1129936465 1650722620
+for
+\change_inserted -1129936465 1650722629
+present in the
+\change_unchanged
+ 
+\change_inserted -1129936465 1650721970
+28-nm 
+\change_unchanged
+Xilinx 7-Series Field Programmable Gate Arrays (FPGAs).
+ The very high-resolution 
+\change_deleted -1129936465 1650722847
+given by the fine part 
+\change_unchanged
+is obtained 
+\change_inserted -1129936465 1650722922
+using the classical tapped delay-line approach where the delay-line is implement
+ed 
+\change_unchanged
+thanks to the 
+\change_inserted -1129936465 1650722946
+adder chain of the 
+\change_deleted -1129936465 1650722949
+Digital Signal Processor (
+\change_unchanged
+DSP
+\change_deleted -1129936465 1650722952
+)
+\change_unchanged
+ blocks
+\change_inserted -1129936465 1650723487
+, i.e.
+ the DSP48E1 primitive.
+\change_deleted -1129936465 1650723023
+, which implements an adder chain with a tunable number of bins, each one
+ characterized by a certain propagation delay given by the adder's operation.
+
+\change_unchanged
+ Exploiting this type of resource
+\change_inserted -1129936465 1650723187
+, instead of the classical CARRY primitive,
+\change_unchanged
+ 
+\change_inserted -1129936465 1650723189
+makes possible a more compact structure also 
+\change_unchanged
+lead
+\change_inserted -1129936465 1650723189
+ing
+\change_deleted -1129936465 1650723079
+s
+\change_unchanged
+ to 
+\change_deleted -1129936465 1650723086
+a relaxation
+\change_inserted -1129936465 1650723189
+relax
+\change_unchanged
+ 
+\change_deleted -1129936465 1650723099
+in 
+\change_unchanged
+the hardware utilization
+\change_inserted -1129936465 1650723189
+.
+\change_deleted -1129936465 1650723105
+,
+\change_unchanged
+ 
+\change_deleted -1129936465 1650723254
+because
+\change_unchanged
+Indeed
+\change_inserted -1129936465 1650723257
+,
+\change_unchanged
+ the sampling of the 
+\change_deleted -1129936465 1650723118
+output data
+\change_inserted -1129936465 1650723257
+tapped delay-line
+\change_unchanged
+ is made by the flip-flops (FFs) integrated in the DSP
+\change_deleted -1129936465 1650723143
+ slice
+\change_unchanged
+ itself, thus not requiring to
+\change_inserted -1129936465 1650723318
+ use 
+\change_deleted -1129936465 1650723328
+extra
+\change_inserted -1129936465 1650723330
+the
+\change_unchanged
+ FFs 
+\change_inserted -1129936465 1650723330
+present in 
+\change_deleted -1129936465 1650723152
+in 
+\change_unchanged
+the FPGA
+\change_inserted -1129936465 1650723330
+ fabric as 
+\change_unchanged
+in 
+\change_inserted -1129936465 1650723330
+the CARRY approach
+\change_unchanged
+.
+\change_inserted -1129936465 1650723330
+
+\end_layout
+
+\begin_layout Abstract
+This device is also tunable, thanks to the possibility of setting 
+\change_deleted -1129936465 1650722056
+its
+\change_inserted -1129936465 1650722647
+the
+\change_unchanged
+ resolution (LSB), 
+\change_inserted -1129936465 1650724234
+some picoseconds
+\change_deleted -1129936465 1650724228
+up to hundreds of femtoseconds
+\change_unchanged
+, and Full-Scale Range (FSR), up to some days, from the user-friendly graphical
+ user interface (GUI) of the IP-Core.
+ Last but not least, the TDC is also characterized by a maximum measurement-rate
+ in the order of hundreds of Msps per channel, thus satisfying the high
+ count-rate capability required by state-of-the-art detectors.
+ To obtain such an high-resolution over a wide FSR, the measurement is performed
+ according to the Nutt-Interpolation technique, in which the timestamp of
+ each channel is made by a coarse 
+\change_inserted -1129936465 1650723413
+counter 
+\change_unchanged
+part and by a fine part
+\change_inserted -1129936465 1650723427
+ performed by the DSP
+\change_unchanged
+.
+ 
+\change_deleted -1129936465 1650723446
+The very high resolution given by the fine part is obtained thanks to the
+ Digital Signal Processor (DSP) architecture, which implements an adder
+ chain with a tunable number of bins, each one characterized by a certain
+ propagation delay given by the adder's operation.
+ Exploiting this type of resource leads to a relaxation in the hardware
+ utilization, because the sampling of the output data is made by the flip-flops
+ (FFs) integrated in the DSP slice itself, thus not requiring extra FFs
+ in the FPGA.
+ 
+\change_unchanged
+From an
+\change_inserted -1129936465 1650723510
+ experimental
+\change_deleted -1129936465 1650723497
+the design
+\change_unchanged
+ point of view, the TDC
+\change_inserted -1129936465 1650723668
+, with
+\change_unchanged
+ a few tens
+\change_inserted -1129936465 1650723668
+ of channels,
+\change_unchanged
+ has been implemented and fully tested on an Artix-7 FPGA
+\change_inserted -1129936465 1650723659
+ (
+\change_unchanged
+xc7a100tftg256-2
+\change_inserted -1129936465 1650723528
+)
+\change_deleted -1129936465 1650723570
+, hosted by the Felix board, where the delay chain has been obtained by
+ cascading DSP48E1 primitives available into the fabric of the Xilinx device
+\change_unchanged
+.
+ 
+\change_deleted -1129936465 1650723642
+We managed to obtain up to a few dozen of channels.
+ 
+\change_unchanged
+
+\end_layout
+
+\begin_layout Keywords
+
+\change_inserted -1129936465 1650723691
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+
+\change_inserted -1129936465 1650723693
+da rivedere
+\change_unchanged
+
+\end_layout
+
+\end_inset
+
+
+\change_unchanged
+Time-to-Digital Converter (TDC), Intellectual Property Core (IP-Core), Digital
+ Signal Processor (DSP), Field Programmable Gate Array (FPGA), flip-flop
+ (FF), Arithmetic Logic Unit (ALU), decoder, Calibration Table (CT), ultra-wide
+ bins (UWBs).
+\end_layout
+
+\begin_layout Section
+Summary 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Paragraph Start
+status open
+
+\begin_layout Plain Layout
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+I
+\end_layout
+
+\end_inset
+
+n
+\end_layout
+
+\end_inset
+
+ scientific research, more and more attention has been given in recent years
+ to the study of temporal evolution of chemical-physical phenomena, occurring
+ in the picosecond time scale.
+ Some examples of these phenomena are Time-of-Flight Positron Emission Tomograph
+y (PET-TOF) 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "7581850"
+literal "false"
+
+\end_inset
+
+, time-resolved spectroscopy 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "6674612"
+literal "false"
+
+\end_inset
+
+ and, Laser Rangefinding 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "4907333"
+literal "false"
+
+\end_inset
+
+.
+ This led to employ an instrument able to discriminate the arrival time
+ of multiple events on different channels, with high temporal resolution
+ and high count-rate capability.
+ All of this can be managed by the Time-to-Digital Converter (TDC), a fully-digi
+tal device which represents a more flexible alternative than mixed-signal
+ detectors such as Time-to-Amplitude Converter 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "8743999"
+literal "false"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+This device can be implemented both in ASIC 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "123198"
+literal "false"
+
+\end_inset
+
+ or in FPGA 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "9452098"
+literal "false"
+
+\end_inset
+
+.
+ This second option has been 
+\change_deleted -1129936465 1650723906
+choosen
+\change_inserted -1129936465 1650723906
+chosen
+\change_unchanged
+ with respect to the ASIC for the high re
+\change_inserted -1129936465 1650723910
+-
+\change_unchanged
+configurability, the low non-recurring costs (NRE), and low time-to-market
+\change_inserted -1129936465 1650723957
+ that best fits with the fast-prototyping and low-scale production request
+ in the research field
+\change_unchanged
+.
+ 
+\change_inserted -1129936465 1650723981
+Moreover, 
+\change_deleted -1129936465 1650723982
+I
+\change_inserted -1129936465 1650723982
+i
+\change_unchanged
+n order to allow easy portability 
+\change_deleted -1129936465 1650723988
+of this device 
+\change_unchanged
+on different systems, we choose to implement 
+\change_deleted -1129936465 1650723997
+it
+\change_inserted -1129936465 1650724000
+the proposed TDC
+\change_unchanged
+ as a user-friendly plug-and-play Intellectual Property Core (IP-Core).
+\end_layout
+
+\begin_layout Standard
+In this contribution, we present a 
+\change_inserted -1129936465 1650724117
+compact and multi-channel 
+\change_unchanged
+TDC IP-Core based on Digital Signal Processor (DSP) 
+\change_deleted -1129936465 1650724142
+architecture
+\change_inserted -1129936465 1650724160
+blocks, the DSP48E1 primitive
+\change_unchanged
+, 
+\change_inserted -1129936465 1650724188
+present in 28-nm 7-Series Xilinx FPGA.
+ The TDC is 
+\change_unchanged
+characterized by a resolution 
+\change_deleted -1129936465 1650724265
+in the order of hundreds 
+\change_unchanged
+of 
+\change_inserted -1129936465 1650724267
+some 
+\change_deleted -1129936465 1650724269
+femto
+\change_inserted -1129936465 1650724270
+pico
+\change_unchanged
+seconds
+\change_inserted -1129936465 1650724275
+,
+\change_unchanged
+ 
+\change_inserted -1129936465 1650724323
+a single-shot precision of tens of picoseconds, 
+\change_unchanged
+and a Full
+\change_inserted -1129936465 1650724897
+-
+\change_deleted -1129936465 1650724896
+ 
+\change_unchanged
+Scale Range (FSR) up to some days (Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Tab1-1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+ 
+\change_inserted -1129936465 1650724468
+
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1129936465 1650724649
+The high-resolution is obtained using the classical tapped delay-line approach
+ where the delay-line is implemented thanks to the adder chain of the DSP
+ blocks, i.e.
+ the DSP48E1 primitive 
+\change_unchanged
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "XILINX_7_SERIES"
+literal "false"
+
+\end_inset
+
+
+\change_inserted -1129936465 1650724649
+.
+ Exploiting this type of resource, instead of the classical CARRY primitive,
+ makes possible a more compact structure
+\change_unchanged
+, because it
+\change_inserted -1129936465 1650725803
+ 
+\change_unchanged
+avoids long carry chains hindering the routing across different regions
+ of the FPGA, 
+\change_inserted -1129936465 1650724649
+also leading to relax the hardware utilization.
+ In fact, the sampling of the tapped delay-line is made by the flip-flops
+ (FFs) integrated in the DSP itself, thus not requiring the use the FFs
+ present in the FPGA fabric as the CARRY approach 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Kwiatkowski_Pawel_Employing_2019"
+literal "false"
+
+\end_inset
+
+.
+
+\change_unchanged
+ 
+\change_deleted -1129936465 1650724658
+To implement it, we exploited the DSP48E1 primitive 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "XILINX_DSP48E1"
+literal "false"
+
+\end_inset
+
+, available into the Xilinx FPGA.
+ The reason for this choice with respect to the more common carry-chain
+ based solution can be found in the relaxation of hardware utilization.
+ Indeed, in typical TDC architectures, no DSP slices in the FPGA are ever
+ used, despite they can also be used to create delay chains, being therefore
+ suited to this kind of high-resolution applications.
+ Moreover, the recording of the output data can be managed by the flip-flops
+ (FFs) integrated in the DSP slice itself, no thus requiring extra FPGA
+ flip-flop resources 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Kwiatkowski_Pawel_Employing_2019"
+literal "false"
+
+\end_inset
+
+.
+
+\change_unchanged
+ As
+\change_inserted -1129936465 1650724810
+ displayed in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:DSP-slice-with"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, in order 
+\change_deleted -1129936465 1650724807
+T
+\change_inserted -1129936465 1650724810
+t
+\change_unchanged
+o create a delay chain in a single DSP, we exploited the operation of sum
+ managed by the internal Arithmetic Logic Unit (ALU), which causes overflow
+ in the 48-bit wide output result, and therefore the propagation of a zero
+ along all the 48 bins 
+\change_deleted -1129936465 1650724789
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:DSP-slice-with"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\change_unchanged
+.
+ Then, more DSPs
+\change_inserted -1129936465 1650725803
+, 10 in our implementation,
+\change_unchanged
+ have been chained, creating an 
+\begin_inset Formula $N_{B}$
+\end_inset
+
+-long output data.
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figure/DSP_FINAL.png
+	width 100col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+DSP slice with used internal resources highlighted.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:DSP-slice-with"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The calculation of the timestamp on a single channel is made using Nutt-Interpol
+ation 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Nutt1968DigitalTI"
+literal "false"
+
+\end_inset
+
+, which composes the data by a 
+\change_inserted -1129936465 1650724984
+c
+\change_deleted -1129936465 1650724984
+C
+\change_unchanged
+oarse part (i.e, Coarse Counter) and, a 
+\change_deleted -1129936465 1650724994
+F
+\change_inserted -1129936465 1650724995
+f
+\change_unchanged
+ine part (i.e, DSP chain).
+ This allows to have high-resolution and high FSR at the same time (Fig
+\change_inserted -1129936465 1650725070
+ure 
+\change_deleted -1129936465 1650725070
+.
+\change_unchanged
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Nutt-Interpolation."
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+ The precise timestamp 
+\change_deleted -1129936465 1650725091
+value
+\change_inserted -1129936465 1650725097
+of channel i-th (
+\begin_inset Formula $T_{i}$
+\end_inset
+
+)
+\change_unchanged
+ is the difference between the 
+\change_inserted -1129936465 1650724924
+c
+\change_deleted -1129936465 1650724924
+C
+\change_unchanged
+oarse
+\change_inserted -1129936465 1650725105
+ (
+\begin_inset Formula $T_{i}^{COARSE}$
+\end_inset
+
+)
+\change_unchanged
+ and the 
+\change_inserted -1129936465 1650724927
+f
+\change_deleted -1129936465 1650724926
+F
+\change_unchanged
+ine
+\change_inserted -1129936465 1650725125
+ (
+\begin_inset Formula $T_{i}^{FINE}$
+\end_inset
+
+)
+\change_unchanged
+ part
+\change_inserted -1129936465 1650725130
+; i.e., 
+\begin_inset Formula $T_{i}=T_{i}^{COARSE}-T_{i}^{FINE}$
+\end_inset
+
+
+\change_unchanged
+.
+ 
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figure/Nutt_interp.png
+	width 100col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Nutt-Interpolation in the i-th channel.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Nutt-Interpolation."
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The coarse part consists in the sampled value of a BIT_COARSE-bit wide counter
+ clocked at 400 MHz (
+\begin_inset Formula $T_{CLK}=2.5\,ns$
+\end_inset
+
+).
+ This is the contribution determining the FSR of the timestamp; i.e., 
+\begin_inset Formula $FSR=T_{CLK}\cdot2^{BIT\_COARSE}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+The fine contribution splits the period 
+\begin_inset Formula $T_{CLK}$
+\end_inset
+
+ into 
+\begin_inset Formula $N_{B}$
+\end_inset
+
+ bins, which is the total length of the output data of the DSP chain, and
+ determines the LSB of the timestamp.
+ This resolution can be increased even more by implementing the Super Wave
+ Union (SWU) Sub-Interpolation algorithm, which consists in implementing
+ 
+\begin_inset Formula $N_{C}$
+\end_inset
+
+ DSP-chains that work in parallel 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Sub"
+literal "false"
+
+\end_inset
+
+.
+ This creates 
+\begin_inset Formula $N_{V}=N_{C}\cdot N_{B}$
+\end_inset
+
+ virtual bins, each one with a virtual propagation delay faster than its
+ real 
+\change_deleted -1129936465 1650725226
+couterpart
+\change_inserted -1129936465 1650725226
+counterpart
+\change_deleted -1129936465 1650725418
+.
+ (Equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:LSB-1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+): 
+\change_inserted -1129936465 1650725430
+; i.e., 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $LSB=T_{CLK}/N_{V}$
+\end_inset
+
+
+\change_unchanged
+.
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\change_deleted -1129936465 1650725433
+\begin_inset Formula 
+\begin{equation}
+LSB=\frac{T_{CLK}}{N_{V}}\label{eq:LSB-1}
+\end{equation}
+
+\end_inset
+
+
+\change_unchanged
+
+\end_layout
+
+\begin_layout Standard
+A block diagram representation of the generic channel that composes the
+ TDC IP-Core in represented in Fig.
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Block_representation"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figure/BD_DSP.png
+	lyxscale 20
+	width 100col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Block diagram of a single channel composing the TDC IP-Core.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Block_representation"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+When a fine measure is performed, the DSP chain generates a thermometric
+ code in output, which is then converted in a binary value by a decoder
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "4529581"
+literal "false"
+
+\end_inset
+
+.
+ After the decoder, the Coarse Extension Core (CEC) implements the Nutt-Interpol
+ation described above, appending the coarse part to the fine one.
+ This module also allows each channel to sustain a maximum measure-rate
+ of 200 Msps, thanks to the internal FIFO that has buffering and Cross-Domain
+ Clock (CDC) functions (from the 400 MHz clock down to a 200 MHz one).
+ The last function performed by the CEC is to keep track of the overflows
+ of the coarse counter, which are then counted by one of the following module,
+ the Overflow Counter (OC).
+ Thanks to the counting of the overflows, we managed to extend the FSR up
+ to some days.
+ The last fundamental module is the 
+\begin_inset Quotes eld
+\end_inset
+
+bin-by-bin
+\begin_inset Quotes erd
+\end_inset
+
+ dynamic Calibrator 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "8885152"
+literal "false"
+
+\end_inset
+
+ present in each channel, with the task of building a Calibration Table
+ (CT), which consists in mapping each bin of the DSP-chain to a value in
+ picoseconds, thus representing the propagation delay of the input signal
+ across each single bin
+\change_inserted -1129936465 1650725555
+.
+
+\change_deleted -1129936465 1650725559
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Calibration-Table."
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\change_unchanged
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename figure/no subint/CT (no subint final).png
+	width 100col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figure/subint/CT FINAL (subint).png
+	width 100col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Calibration Table for the implementation without sub-interpolation (at the
+ top) and with sub-interpolation (at the bottom).
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Calibration-Table."
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\change_inserted -1129936465 1650726189
+
+\end_layout
+
+\begin_layout Standard
+
+\change_inserted -1129936465 1650726170
+In Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Calibration-Table."
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\change_unchanged
+ (at the top)
+\change_inserted -1129936465 1650726170
+, w
+\change_deleted -1129936465 1650725572
+W
+\change_unchanged
+e can see 
+\change_deleted -1129936465 1650725579
+from the figure 
+\change_unchanged
+that the DSP-chain architecture
+\change_inserted -1129936465 1650725738
+, without any kind of sub-interpolation (
+\begin_inset Formula $N_{C}=1$
+\end_inset
+
+, so 
+\begin_inset Formula $N_{V}=N_{B}=480$
+\end_inset
+
+),
+\change_unchanged
+ suffers from high non
+\change_inserted -1129936465 1650725610
+-
+\change_unchanged
+linearity due to the joints from one DSP to the following and to the crossings
+ of different clock regions.
+ This generates the so called ultra-wide bins (UWBs), which are very slow
+ bins corrupting the single-shot precision of the timestamp measurement.
+
+\change_deleted -1129936465 1650725854
+ 
+\change_unchanged
+ The Sub-Interpolation algorithm
+\change_inserted -1129936465 1650725882
+, SWU (
+\begin_inset Formula $N_{C}=2$
+\end_inset
+
+, 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $N_{B}=480$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+, 
+\begin_inset Formula $N_{V}=960$
+\end_inset
+
+),
+\change_unchanged
+ 
+\change_inserted -1129936465 1650726168
+has been chosen in order to reduce the UWBs (see Figure 
+\change_unchanged
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Calibration-Table."
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ at the bottom)
+\change_inserted -1129936465 1650726168
+.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\change_deleted -1129936465 1650725924
+described above makes this UWBs faster, however still leaving a great disparity
+ in the bins' propagation delays.
+
+\change_unchanged
+ Hence, the 
+\change_deleted -1129936465 1650725972
+great
+\change_unchanged
+ advantage of 
+\change_deleted -1129936465 1650725977
+hardware saving given by
+\change_inserted -1129936465 1650725980
+the compactness
+\change_unchanged
+ 
+\change_inserted -1129936465 1650725984
+given by
+\change_deleted -1129936465 1650725986
+this
+\change_unchanged
+ 
+\change_inserted -1129936465 1650725987
+the
+\change_unchanged
+ DSP architecture is paid with a loss in measurement precision.
+\end_layout
+
+\begin_layout Standard
+We have tested all the performances on 
+\change_deleted -1129936465 1650726091
+the Felix board, hosting 
+\change_unchanged
+an Artix-7 FPGA (xc7a100tftg256-2).
+ These performances are reported in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Tab1-1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\begin_inset Float table
+placement b
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Achievable performance of the TDC IP-Core
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Tab1-1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="9" columns="6">
+<features booktabs="true" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Feature
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+without Sub-Interpolation
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+with Sub-Interpolation
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Clock TDC Freq.
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+400 MHz
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Num.
+ of Chs
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+up to 24
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+up to 12
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Max.
+ Channel Rate
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+200 MHz
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Resolution (LSB)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5.2 ps
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2.6 ps
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Ultra Wide Bin (UWB)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+130 ps
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+50 ps
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Full Scale Range (FSR)
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+some days
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Single-Shot Precision
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+62 ps rms
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+26 ps rms
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+LUT/FF/BRAM (one Ch.)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2578/2998/1.5
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4103/4459/2
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+btprint "btPrintCited"
+bibfiles "References"
+options "IEEEtran"
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
