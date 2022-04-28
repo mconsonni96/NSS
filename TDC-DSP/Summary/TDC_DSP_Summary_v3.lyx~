@@ -759,7 +759,7 @@ noprefix "false"
 ), suffers from high non-linearity due to the joints from one DSP to the
  following and to the crossings of different clock regions.
  This generates the so called ultra-wide bins (UWBs), which are very slow
- bins (130 ps) corrupting the single-shot precision (62 ps r.m.s.) of the timestamp
+ bins (120 ps) corrupting the single-shot precision (27 ps r.m.s.) of the timestamp
  measurement.
  The Sub-Interpolation algorithm (see Figure 
 \begin_inset CommandInset ref
@@ -771,7 +771,7 @@ noprefix "false"
 
 \end_inset
 
- at the bottom)), SWU (
+ at the bottom), SWU (
 \begin_inset Formula $N_{C}=2$
 \end_inset
 
@@ -809,9 +809,121 @@ noprefix "false"
 \begin_inset Formula $N_{V}=960$
 \end_inset
 
-), has been chosen in order to reduce the UWBs (50 ps), increasin the precision
- (26 ps r.m.s.).
+), has been chosen in order to reduce the UWBs (50 ps), increasing the precision
+ (18 ps r.m.s.), as we can see from Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Histogram-of-the"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figure/no subint/hist (no subint) (FINAL).png
+	width 50col%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename figure/subint/hist (subint) (FINAL).png
+	width 50col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Histogram of the time difference between two channels in the case without
+ sub-interpolation (
+\begin_inset Formula $N_{C}=1,$
+\end_inset
+
+so 
+\begin_inset Formula $N_{V}=N_{B}=480$
+\end_inset
+
+), i.e.
+ 27 ps r.m.s.
+ (on the left) and with sub-interpolation (
+\begin_inset Formula $N_{C}=2$
+\end_inset
+
+, 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $N_{B}=480$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+, 
+\begin_inset Formula $N_{V}=960$
+\end_inset
+
+), i.e.
+ 18 ps r.m.s.
+ (on the right).
  
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Histogram-of-the"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \begin_inset Note Note
 status open
 
@@ -1175,7 +1287,7 @@ Ultra Wide Bin (UWB)
 \begin_inset Text
 
 \begin_layout Plain Layout
-130 ps
+120 ps
 \end_layout
 
 \end_inset
@@ -1287,7 +1399,7 @@ Single-Shot Precision
 \begin_inset Text
 
 \begin_layout Plain Layout
-62 ps rms
+27 ps r.m.s.
 \end_layout
 
 \end_inset
@@ -1296,7 +1408,7 @@ Single-Shot Precision
 \begin_inset Text
 
 \begin_layout Plain Layout
-26 ps rms
+18 ps r.m.s.
 \end_layout
 
 \end_inset
